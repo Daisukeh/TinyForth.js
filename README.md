@@ -1,2 +1,54 @@
 # TinyForth.js
+
 このプロジェクトは、組み込みを目的として設計した**Forth言語**を、**Javascript言語**でプロトタイプ版を開発して、内部処理の仕組みを検証することを目的とする。言語仕様は、ターゲットMPU上で省メモリ動作させること、かつ、アセンブラでの実装も考慮することで、既存の仕様のサブセットとする。
+
+## Instruction Set
+
+* D0 (push number)  '{number}' (→ n)
+* D1 (pop number) '.' (n →)
+* D2 (emit string) '."{string}"' (→)
+* D3 (emit number) 'EMIT' (n →)
+* D4 (collect key) 'KEY' (→ n)
+* D5 (duplicate data stack) 'DUP' (n → n n)
+* D6 (roll data stack) 'ROLL' (indx →)
+* D7 (depth data stack) 'DEPTH' (→ dpth)
+* D8 (drop data stack) 'DROP' (n →)
+* D9 (drop address stack) 'DROPA' (→) [adrs →]
+* DA (fetch memory) '@' (adrs → n)
+* DB (store memory) '!' (n adrs →)
+* DC (fetch data stack) '@#' (indx → n)
+* DD (store data stack) '!#' (n indx →)
+* DE (fetch address stack) '@_' (indx → adrs) [→]
+* DF (store address stack) '!_' (adrs indx →) [→]
+* E0 (add) '+' (n1 n2 → (n1+n2))
+* E1 (subtract) '-' (n1 n2 → (n1-n2))
+* E2 (multiple) '*' (n1 n2 → (n1*n2))
+* E3 (divide) '/' (n1 n2 → (n1/n2))
+* E4 (modulus) '%' (n1 n2 → (n1%n2))
+* E5 (logical and) '&' (n1 n2 → (n1&n2))
+* E6 (logical inclusive or) '|' (n1 n2 → (n1|n2))
+* E7 (logical exclusive or) '* ' (n1 n2 → (n1* n2))
+* E8 (logical not) '~' (n → (~n))
+* E9 (logical shift left) '<<' (n bit → (n<<bit))
+* EA (aithmetic shift right) '>>' (n bit → (n>>bit))
+* EB (equals) '=' (n1 n2 → (n1=n2,flg:0|1))
+* EC (less than) '<' (n1 n2 → (n1<n2,flg:0|1))
+* ED (greater than) '>' (n1 n2 → (n1>n2,flg:0|1))
+* EE (equal zero) '=0' (n → (n=0,flg:0|1))
+* EF (positive) '>0' (n → (n>0,flg:0|1))
+* F0 (begin condition) 'IF' (flg →)
+* F1 (else condition) 'ELSE' (→)
+* F2 (end condition) 'THEN' (→)
+* F3 (begin loop) 'DO' (→) [→ adrs+1]
+* F4 (next loop) 'NEXT' (→) [adrs → adrs]
+* F5 (end loop) 'LOOP' (→) [adrs → adrs]
+* F6 (leave loop) 'LEAVE' (→) [adrs →]
+* F7 (check condition loop) 'WHILE' (flg →) (leave loop:) [adrs →]
+* F8 (check count-up loop) 'COUNT' (n1 n2 → (n1+1) n2 n1) (leave loop:) [adrs →]
+* F9 (exit word) 'EXIT' (→) [adrs →]
+* FA (stop execution) 'STOP' (→)
+* FB (allocate variable) 'VAR {name}' (→)
+* FC (begin word) ': {name}' (→)
+* FD (end word) ';' (→)
+* FE (call variable|word) '{name}' ((variable:) adrs →) (word:) [→ adrs+1]
+* FF (comment) '({comment})' (→)
