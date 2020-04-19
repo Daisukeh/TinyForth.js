@@ -298,7 +298,7 @@ TinyForth.prototype.run = () => {
 
 	rli.on('line', (line) => {
 		var words = [];
-		line.replace(/("[^"]*"|[^ ]+)/g, function(word) {
+		line.replace(/(\"[^\"]*\"|\([^\)]*\)|[^\s]+)/g, function(word) {
 			words.push(word);
 		});
 
