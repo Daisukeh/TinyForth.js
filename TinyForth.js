@@ -81,7 +81,7 @@ TinyForth.prototype.run = () => {
 			console.log(popDataStack());
 		} },
 		{ 'code': 0xd2,
-		  'word': '."',
+		  'word': '"',
 		  'exec': (code) => {
 			console.log(code.value);
 		} },

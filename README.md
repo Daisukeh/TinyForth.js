@@ -6,7 +6,7 @@
 
 * D0 (push number)  '{number}' (→ n)
 * D1 (pop number) '.' (n →)
-* D2 (emit string) '."{string}"' (→)
+* D2 (emit string) '"{string}"' (→)
 * D3 (emit number) 'EMIT' (n →)
 * D4 (collect key) 'KEY' (→ n)
 * D5 (duplicate data stack) 'DUP' (n → n n)
